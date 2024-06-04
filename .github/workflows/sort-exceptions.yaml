@@ -29,10 +29,12 @@ jobs:
         
         if [ -n "$failed_files" ]; then
           echo "The following JSON files are not sorted:"
+          echo "=================================================="
           echo "$failed_files"
+          echo "=================================================="
 
           echo "Run the following command to sort all files recursively:"
-          echo "find pkg/kor/exceptions -name '*.json' -exec sh -c 'jq \". |= sort_by(.Namespace, .ResourceName)\" {} > {}.tmp && mv {}.tmp {}' \\;"
+          echo "\`find pkg/kor/exceptions -name '*.json' -exec sh -c 'jq \". |= sort_by(.Namespace, .ResourceName)\" {} > {}.tmp && mv {}.tmp {}' \\;\`"
           exit 1
         fi
 
