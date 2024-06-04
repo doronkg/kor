@@ -17,7 +17,7 @@ jobs:
 
     - name: Sort JSON files
       run: |
-        find exceptions -name '*.json' -exec jq -S . {} \+
+        find pkg/kor/exceptions -name '*.json' -exec jq -S . {} \+
 
     - name: Commit and push changes
       run: |
