@@ -1,0 +1,28 @@
+name: Sort JSON Files
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'exceptions/**'
+
+jobs:
+  sort_json:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Sort JSON files
+      run: |
+        find exceptions -name '*.json' -exec jq -S . {} \+
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add .
+        git commit -m "Automatically sorted JSON files"
+        git push
