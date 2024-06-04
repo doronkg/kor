@@ -2,7 +2,7 @@
   "exceptionJobs": [
     {
       "Namespace": "kube-system",
-      "ResourceName": "helm-install-traefik"
+      "ResourceName": "helm-install-traefik-x"
     },
     {
       "Namespace": "kube-system",
