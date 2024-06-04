@@ -17,4 +17,14 @@ jobs:
 
     - name: Check Exceptions JSON Files Sorting
       run: |
-        find pkg/kor/exceptions/ -name '*.json' -exec sh -c 'SORTED=$(jq "with_entries(.value |= sort_by(.Namespace, .ResourceName))" {}); if [ "$(jq . {})" != "$SORTED" ]; then echo "{} is not sorted"; fi;' \;
+        failed_files=""
+        find pkg/kor/exceptions/ -name '*.json' -exec sh -c 'SORTED=$(jq "with_entries(.value |= sort_by(.Namespace, .ResourceName))" {}); if [ "$(jq . {})" != "$SORTED" ]; then failed_files="$failed_files {}"; fi;' \;
+
+        if [ -n "$failed_files" ]; then
+          echo "The following JSON files are not sorted:"
+          echo "$failed_files"
+
+          echo "Run the following command to sort all files recursively:"
+          echo "find pkg/kor/exceptions -name '*.json' -exec sh -c 'jq ". |= sort_by(.Namespace, .ResourceName)" {} > {}.tmp && mv {}.tmp {}' \;"
+          exit 1
+        fi
