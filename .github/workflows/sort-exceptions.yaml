@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'exceptions/**'
+      - 'pkg/kor/exceptions/**'
 
 jobs:
   sort_json:
